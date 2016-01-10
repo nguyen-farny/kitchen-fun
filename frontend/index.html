@@ -1,0 +1,89 @@
+﻿<!doctype html>
+<html ng-app="kitchenApp">
+	<head>
+		<meta charset="utf-8">
+		<title>KitchenFun</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="angular.min.js"></script>
+		<script src="script.js"></script>
+		<link rel="stylesheet" href="font-awesome.min.css">
+		<link rel="stylesheet" href="style.css">
+		<link rel="icon" href="images/favicon.gif" />
+	</head>
+	<body>
+		<header>
+			<h1><i class="fa fa-cutlery"></i> KitchenFun</h1>
+			<form>
+				<div id="search" ng-controller="SearchCtrl">
+			    	<span id="search-icon"><i class="fa fa-search"></i></span>
+					<input id="search-input" ng-model="search" type="text" placeholder="Rechercher ici.." />
+				</div>
+			</form>
+		</header>
+	
+
+		<main>
+
+		<!-- Une VUE qui est controllé par 'RecipeCtrl' -->
+		<div ng-controller="RecipeCtrl" ng-show="recipeVisible" id="recipe">
+			<div class="box">
+				<button id="close" ng-click="closeRecipe()"><i class="fa fa-close"></i></button>
+
+				<img src="{{recipe.image}}" />
+				
+				<h2>{{recipe.title}}</h2>
+				Préparation: {{recipe.prepareTime}} minute(s) <br />
+				Cuisson: {{recipe.cookTime}} minute(s) <br />
+				
+				<div id="recipe-ingredients">
+				<h3>Ingrédients:</h3>
+				<ul>
+					<li ng-repeat="i in recipe.ingredients">{{i.name}} : {{i.quantity}} {{i.unit}}</li>
+				</ul> 
+				</div>
+				
+				<h3>Instructions:</h3>
+				<p ng-bind-html="renderHtml(recipe.instructions)"></p> 
+			</div>
+		</div>
+
+		<!-- Table -->
+		<div id="container">
+		
+		<!-- Liste des recettes -->
+		<div ng-controller="RecipeListCtrl" ng-show="!recipeVisible" id="recipes-list">
+			<div>
+				<div class="box recipeBlock" ng-repeat="r in recipes | filter:matchingSearch | filter:matchingIngredients">
+					<a href="#recipe-{{r.id}}" ng-click="showRecipe(r.id)">
+						<img src="{{r.image}}" />
+						{{r.title}} <br>
+					</a>	
+						<i class="fa fa-clock-o"></i> Prêt en {{r.prepareTime--r.cookTime}} minutes
+				</div>
+			</div> 			
+		</div>
+		
+		<!-- Liste des ingrédints -->
+		<div id="ingredients-list" ng-show="!recipeVisible" ng-controller="IngredientListCtrl">
+			<div class="box">
+				<h2>
+					Vos ingrédients 				
+					<i ng-click="checkAll()" class="fa fa-check-square"></i>
+					<i ng-click="uncheckAll()" class="fa fa-minus-square"></i>
+				</h2>
+				<ul>
+					<li ng-repeat="i in ingredients | filter:hideOptional | orderBy:'name'">
+						<label><input ng-model="i.checked" type="checkbox" ng-click="updateFilter(i)" /><span>{{i.name}}</span></label>
+					</li>
+				</ul>
+			</div> 			
+		</div>
+
+		</div>
+		</main>
+		
+		<footer class="box" style="opacity: 0;">
+			<a href="http://www.freedomain.co.nr/" target="_blank" title="FreeDomain.co.nr" rel="nofollow"><img src="http://nezoona.imdrv.net/soof62.gif" width="88" height="31" border="0" alt="FreeDomain.co.nr" /></a>
+		</footer>
+	</body>
+</html>
