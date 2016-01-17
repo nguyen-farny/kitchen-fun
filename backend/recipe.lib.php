@@ -32,7 +32,6 @@ class Recipe implements JsonSerializable
 				r.title, 
 				r.prepareTime, 
 				r.cookTime, 
-				r.instructions, 
 				r.image, 
 				i.id as ingredientId, 
 				i.name, 
@@ -60,7 +59,6 @@ class Recipe implements JsonSerializable
 				$recipe->title = $row->title;
 				$recipe->prepareTime = $row->prepareTime;
 				$recipe->cookTime = $row->cookTime;
-				$recipe->instructions = $row->instructions;
 				$recipe->image = $row->image;
 				$recipe->ingredients = [];
 				$result[] = $recipe;

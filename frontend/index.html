@@ -6,6 +6,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="angular.min.js"></script>
 		<script src="script.js"></script>
+		<script src="recipe.ctrl.js"></script>
+		<script src="recipelist.ctrl.js"></script>
+		<script src="ingredientlist.ctrl.js"></script>
 		<link rel="stylesheet" href="font-awesome.min.css">
 		<link rel="stylesheet" href="style.css">
 		<link rel="icon" href="images/favicon.gif" />
@@ -70,7 +73,9 @@
 					Vos ingrédients 				
 					<i ng-click="checkAll()" class="fa fa-check-square"></i>
 					<i ng-click="uncheckAll()" class="fa fa-minus-square"></i>
-				</h2>
+				</h2>		
+				<input type="radio" ng-model="ingredientFilterMode" name="radio" id="AuMoins" value="AuMoins"/><label for="AuMoins">Au Moins</label>
+				<input type="radio" ng-model="ingredientFilterMode" name="radio" id="Unique" value="Unique"  checked="checked" /><label for="Unique">Uniquement</label>
 				<ul>
 					<li ng-repeat="i in ingredients | filter:hideOptional | orderBy:'name'">
 						<label><input ng-model="i.checked" type="checkbox" ng-click="updateFilter(i)" /><span>{{i.name}}</span></label>
